@@ -1,3 +1,14 @@
+import { ThemeProvider } from 'styled-components'
+
+import { Router } from './router'
+import { GlobalStyle } from './styles/global'
+import { defaultTheme } from './styles/theme/default'
+
 export function App() {
-  return <h1>App</h1>
+	return (
+		<ThemeProvider theme={defaultTheme}>
+			<GlobalStyle />
+			<Router />
+		</ThemeProvider>
+	)
 }
