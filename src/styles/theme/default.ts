@@ -35,25 +35,25 @@ export const defaultTheme = {
         font-weight: ${_primitives.text.weight.extraBold};
       `,
 			titleL: css`
-        font-family: ${_primitives.text.font.display}, sans-serif;
+        font-family: '${_primitives.text.font.display}', sans-serif;
         font-size: ${_primitives.text.size['3xl']};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.extraBold};
       `,
 			titleM: css`
-        font-family: ${_primitives.text.font.display}, sans-serif;
+        font-family: '${_primitives.text.font.display}', sans-serif;
         font-size: ${_primitives.text.size['2xl']};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.extraBold};
       `,
 			titleS: css`
-        font-family: ${_primitives.text.font.display}, sans-serif;
+        font-family: '${_primitives.text.font.display}', sans-serif;
         font-size: ${_primitives.text.size.xl};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.bold};
       `,
 			titleXS: css`
-        font-family: ${_primitives.text.font.display}, sans-serif;
+        font-family: '${_primitives.text.font.display}', sans-serif;
         font-size: ${_primitives.text.size.lg};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.bold};
@@ -61,37 +61,37 @@ export const defaultTheme = {
 		},
 		body: {
 			regularL: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size.xl};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.regular};
       `,
 			regularM: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size.md};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.regular};
       `,
 			regularS: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size.sm};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.regular};
       `,
 			boldL: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size.xl};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.bold};
       `,
 			boldM: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size.md};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.bold};
       `,
 			boldS: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size.xs};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.bold};
@@ -99,19 +99,19 @@ export const defaultTheme = {
 		},
 		component: {
 			tag: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size['2xs']};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.bold};
       `,
 			buttonL: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size.sm};
         line-height: ${_primitives.text.height.lg};
         font-weight: ${_primitives.text.weight.bold};
       `,
 			buttonM: css`
-        font-family: ${_primitives.text.font.sans}, sans-serif;
+        font-family: '${_primitives.text.font.sans}', sans-serif;
         font-size: ${_primitives.text.size.xs};
         line-height: ${_primitives.text.height.lg};
         font-weight: ${_primitives.text.weight.regular};
