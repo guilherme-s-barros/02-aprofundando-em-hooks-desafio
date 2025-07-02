@@ -14,7 +14,7 @@ export function Header() {
 					São Paulo, SP
 				</span>
 
-				<Link to="/cart">
+				<Link to="/cart" title="Ir ao carrinho">
 					<ShoppingCart weight="fill" size={24} />
 				</Link>
 			</InfoContainer>

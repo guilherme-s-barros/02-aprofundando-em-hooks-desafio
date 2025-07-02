@@ -21,7 +21,7 @@ export const InfoContainer = styled.div`
     align-items: center;
     gap: 0.25rem;
     padding: 0.5rem;
-    border-radius: 8px;
+    border-radius: 0.5rem;
 
     svg {
       color: ${({ theme }) => theme.color.brand.secondary};
@@ -34,6 +34,6 @@ export const InfoContainer = styled.div`
 
     line-height: 0;
     padding: 0.5rem;
-    border-radius: 8px;
+    border-radius: 0.5rem;
   }
 `

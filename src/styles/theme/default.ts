@@ -103,6 +103,7 @@ export const defaultTheme = {
         font-size: ${_primitives.text.size['2xs']};
         line-height: ${_primitives.text.height.sm};
         font-weight: ${_primitives.text.weight.bold};
+        letter-spacing: 0.1rem;
       `,
 			buttonL: css`
         font-family: '${_primitives.text.font.sans}', sans-serif;
