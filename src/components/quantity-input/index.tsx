@@ -35,7 +35,7 @@ export function QuantityInput() {
 	return (
 		<QuantityInputContainer>
 			<button type="button" title="Remover" onClick={handleDecrementQuantity}>
-				<Minus size={14} />
+				<Minus size={12} />
 			</button>
 
 			<input
@@ -47,7 +47,7 @@ export function QuantityInput() {
 			/>
 
 			<button type="button" title="Adicionar" onClick={handleIncrementQuantity}>
-				<Plus size={14} />
+				<Plus size={12} />
 			</button>
 		</QuantityInputContainer>
 	)

@@ -111,6 +111,8 @@ export const CoffeeCard = styled.li`
   img {
     max-width: 120px;
     margin-top: -2.5rem;
+
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5))
   }
 `
 
@@ -182,4 +184,9 @@ export const AddToCartButton = styled.button`
   line-height: 0;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  transition: 0.2s background;
+
+  &:hover {
+    background: ${({ theme }) => theme.color.brand.secondary}
+  }
 `

@@ -8,7 +8,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   *:focus {
-    outline: 2px solid ${({ theme }) => theme.color.brand.primary};
+    outline: 2px solid ${({ theme }) => theme.color.brand.primaryDark};
+  }
+
+  *::selection {
+    background: ${({ theme }) => theme.color.brand.primaryDark};
+    color: ${({ theme }) => theme.color.base.white};
   }
 
   body {

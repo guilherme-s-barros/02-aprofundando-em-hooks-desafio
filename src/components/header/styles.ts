@@ -35,5 +35,11 @@ export const InfoContainer = styled.div`
     line-height: 0;
     padding: 0.5rem;
     border-radius: 0.5rem;
+    transition: all 0.2s;
+
+    &:hover {
+      background: ${({ theme }) => theme.color.brand.primary};
+      color: ${({ theme }) => theme.color.brand.primaryLight};
+    }
   }
 `
