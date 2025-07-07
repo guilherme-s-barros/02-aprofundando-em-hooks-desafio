@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { DefaultLayout } from './layout/default'
-import { Cart } from './pages/cart'
+import { Checkout } from './pages/checkout'
 import { Home } from './pages/home'
 
 export function Router() {
@@ -10,7 +10,7 @@ export function Router() {
 			<Routes>
 				<Route path="/" Component={DefaultLayout}>
 					<Route index path="/" Component={Home} />
-					<Route path="/cart" Component={Cart} />
+					<Route path="/checkout" Component={Checkout} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

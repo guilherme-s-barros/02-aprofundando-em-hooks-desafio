@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const CartContainer = styled.main`
+export const CheckoutContainer = styled.main`
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
@@ -153,7 +153,7 @@ export const PaymentMethodButton = styled.label`
   }
 `
 
-export const InvoiceContainer = styled.div`
+export const CartContainer = styled.div`
   background: ${({ theme }) => theme.color.base.card};
   border-radius: 0.5rem 2.75rem;
   padding: 2.5rem;

@@ -16,9 +16,9 @@ import {
 	CartItemActions,
 	CartItemDetails,
 	CartItemInfo,
+	CheckoutContainer,
 	ConfirmOrderButton,
 	FormContainer,
-	InvoiceContainer,
 	OptionalInput,
 	OrderFormSection,
 	PaymentMethodButton,
@@ -27,9 +27,9 @@ import {
 	TextInput,
 } from './styles'
 
-export function Cart() {
+export function Checkout() {
 	return (
-		<CartContainer>
+		<CheckoutContainer>
 			<section>
 				<h2>Complete seu pedido</h2>
 
@@ -106,7 +106,7 @@ export function Cart() {
 			<section>
 				<h2>Cafés selecionados</h2>
 
-				<InvoiceContainer>
+				<CartContainer>
 					<div>
 						<CartItem>
 							<CartItemInfo>
@@ -171,8 +171,8 @@ export function Cart() {
 					<ConfirmOrderButton type="submit" form="orderForm">
 						Confirmar pedido
 					</ConfirmOrderButton>
-				</InvoiceContainer>
+				</CartContainer>
 			</section>
-		</CartContainer>
+		</CheckoutContainer>
 	)
 }
