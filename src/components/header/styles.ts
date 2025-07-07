@@ -5,6 +5,10 @@ export const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 2rem 0;
+
+  > a {
+    outline: none;
+  }
 `
 
 export const InfoContainer = styled.div`

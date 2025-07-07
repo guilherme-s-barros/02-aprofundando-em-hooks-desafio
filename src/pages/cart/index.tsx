@@ -4,15 +4,26 @@ import {
 	CurrencyDollar,
 	MapPinLine,
 	Money,
+	Trash,
 } from 'phosphor-react'
 
+import { QuantityInput } from '../../components/quantity-input'
 import {
+	Amount,
+	AmountContainer,
 	CartContainer,
+	CartItem,
+	CartItemActions,
+	CartItemDetails,
+	CartItemInfo,
+	ConfirmOrderButton,
 	FormContainer,
+	InvoiceContainer,
 	OptionalInput,
 	OrderFormSection,
 	PaymentMethodButton,
 	PaymentMethods,
+	RemoveCartItemButton,
 	TextInput,
 } from './styles'
 
@@ -22,7 +33,7 @@ export function Cart() {
 			<section>
 				<h2>Complete seu pedido</h2>
 
-				<form>
+				<form id="orderForm">
 					<OrderFormSection>
 						<header>
 							<h3>
@@ -94,6 +105,73 @@ export function Cart() {
 			</section>
 			<section>
 				<h2>Cafés selecionados</h2>
+
+				<InvoiceContainer>
+					<div>
+						<CartItem>
+							<CartItemInfo>
+								<img
+									src="/images/coffees/expresso.png"
+									alt="Expresso tradicional"
+								/>
+
+								<CartItemDetails>
+									<span>Expresso tradicional</span>
+
+									<CartItemActions>
+										<QuantityInput />
+
+										<RemoveCartItemButton type="button">
+											<Trash size={16} />
+											Remover
+										</RemoveCartItemButton>
+									</CartItemActions>
+								</CartItemDetails>
+							</CartItemInfo>
+
+							<strong>R$ 9,90</strong>
+						</CartItem>
+						<CartItem>
+							<CartItemInfo>
+								<img src="/images/coffees/latte.png" alt="Latte" />
+
+								<CartItemDetails>
+									<span>Latte</span>
+
+									<CartItemActions>
+										<QuantityInput />
+
+										<RemoveCartItemButton type="button">
+											<Trash size={16} />
+											Remover
+										</RemoveCartItemButton>
+									</CartItemActions>
+								</CartItemDetails>
+							</CartItemInfo>
+
+							<strong>R$ 19,90</strong>
+						</CartItem>
+					</div>
+
+					<AmountContainer>
+						<Amount>
+							<span>Total de itens</span>
+							<span>R$ 29,70</span>
+						</Amount>
+						<Amount>
+							<span>Total de entrega</span>
+							<span>R$ 3,50</span>
+						</Amount>
+						<Amount>
+							<strong>Total</strong>
+							<strong>R$ 33,20</strong>
+						</Amount>
+					</AmountContainer>
+
+					<ConfirmOrderButton type="submit" form="orderForm">
+						Confirmar pedido
+					</ConfirmOrderButton>
+				</InvoiceContainer>
 			</section>
 		</CartContainer>
 	)

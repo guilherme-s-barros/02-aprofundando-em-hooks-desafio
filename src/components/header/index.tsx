@@ -6,7 +6,9 @@ import { HeaderContainer, InfoContainer } from './styles'
 export function Header() {
 	return (
 		<HeaderContainer>
-			<img src="/logo.svg" alt="Logotipo Coffee Delivery" />
+			<Link to="/">
+				<img src="/logo.svg" alt="Logotipo Coffee Delivery" />
+			</Link>
 
 			<InfoContainer>
 				<span>

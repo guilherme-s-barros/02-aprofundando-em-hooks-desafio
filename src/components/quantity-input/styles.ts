@@ -4,6 +4,7 @@ export const QuantityInputContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  width: fit-content;
 
   button {
     color: ${({ theme }) => theme.color.brand.secondary};
@@ -33,6 +34,7 @@ export const QuantityInputContainer = styled.div`
     
     width: 5.5rem;
     height: 100%;
+    min-height: 2rem;
     text-align: center;
 
     appearance: none;
