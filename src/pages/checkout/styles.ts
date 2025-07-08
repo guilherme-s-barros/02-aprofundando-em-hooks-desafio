@@ -185,7 +185,7 @@ export const CartItemInfo = styled.div`
 `
 
 export const CartItemDetails = styled.div`
-  span {
+  p {
     display: block;
     margin-bottom: 0.5rem;
   }
@@ -223,23 +223,25 @@ export const AmountContainer = styled.div`
   border-top: 1px solid ${({ theme }) => theme.color.base.button};
   padding-top: 1.5rem;
   margin-top: 1.5rem;
-`
-
-export const Amount = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.75rem;
 
-  & + & {
-    margin-top: 0.75rem;
-  }
+  p {
+    display: flex;
+    justify-content: space-between;
 
-  span:first-child {
-    ${({ theme }) => theme.text.body.regularS};
+    span {
+      ${({ theme }) => theme.text.body.regularS};
+    }
   }
 
   strong {
     ${({ theme }) => theme.text.body.boldL};
     color: ${({ theme }) => theme.color.base.subtitle};
+
+    display: flex;
+    justify-content: space-between;
   }
 `
 

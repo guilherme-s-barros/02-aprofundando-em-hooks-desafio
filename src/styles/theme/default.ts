@@ -12,6 +12,15 @@ export const defaultTheme = {
 			secondaryLight: _primitives.color.purple[10],
 			secondary: _primitives.color.purple[50],
 			secondaryDark: _primitives.color.purple[60],
+
+			gradient: css`
+        background:
+          linear-gradient(
+            90deg,
+            ${_primitives.color.yellow[50]},
+            ${_primitives.color.purple[50]}
+          );
+      `,
 		},
 		base: {
 			title: _primitives.color.gray[90],

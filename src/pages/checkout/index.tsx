@@ -9,7 +9,6 @@ import {
 
 import { QuantityInput } from '../../components/quantity-input'
 import {
-	Amount,
 	AmountContainer,
 	CartContainer,
 	CartItem,
@@ -116,7 +115,7 @@ export function Checkout() {
 								/>
 
 								<CartItemDetails>
-									<span>Expresso tradicional</span>
+									<p>Expresso tradicional</p>
 
 									<CartItemActions>
 										<QuantityInput />
@@ -136,7 +135,7 @@ export function Checkout() {
 								<img src="/images/coffees/latte.png" alt="Latte" />
 
 								<CartItemDetails>
-									<span>Latte</span>
+									<p>Latte</p>
 
 									<CartItemActions>
 										<QuantityInput />
@@ -154,18 +153,20 @@ export function Checkout() {
 					</div>
 
 					<AmountContainer>
-						<Amount>
+						<p>
 							<span>Total de itens</span>
-							<span>R$ 29,70</span>
-						</Amount>
-						<Amount>
-							<span>Total de entrega</span>
-							<span>R$ 3,50</span>
-						</Amount>
-						<Amount>
-							<strong>Total</strong>
-							<strong>R$ 33,20</strong>
-						</Amount>
+							R$ 29,70
+						</p>
+
+						<p>
+							<span>Entrega</span>
+							R$ 3,50
+						</p>
+
+						<strong>
+							<span>Total</span>
+							R$ 33,20
+						</strong>
 					</AmountContainer>
 
 					<ConfirmOrderButton type="submit" form="orderForm">

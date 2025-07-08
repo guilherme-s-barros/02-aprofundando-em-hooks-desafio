@@ -1,5 +1,6 @@
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 
+import { IconContainer } from '../../components/icon-container'
 import { QuantityInput } from '../../components/quantity-input'
 import {
 	AddToCartButton,
@@ -14,7 +15,6 @@ import {
 	FeaturesContainer,
 	HeroContent,
 	HeroSection,
-	IconContainer,
 } from './styles'
 
 export function Home() {
@@ -37,25 +37,25 @@ export function Home() {
 								<IconContainer $backgroundColor="yellowDark">
 									<ShoppingCart weight="fill" size={16} />
 								</IconContainer>
-								Compra simples e segura
+								<p>Compra simples e segura</p>
 							</span>
 							<span>
 								<IconContainer $backgroundColor="gray">
 									<Package weight="fill" size={16} />
 								</IconContainer>
-								Embalagem mantém o café intacto
+								<p>Embalagem mantém o café intacto</p>
 							</span>
 							<span>
 								<IconContainer $backgroundColor="yellow">
 									<Timer weight="fill" size={16} />
 								</IconContainer>
-								Entrega rápida e rastreada
+								<p>Entrega rápida e rastreada</p>
 							</span>
 							<span>
 								<IconContainer $backgroundColor="purple">
 									<Coffee weight="fill" size={16} />
 								</IconContainer>
-								O café chega fresquinho até você
+								<p>O café chega fresquinho até você</p>
 							</span>
 						</FeaturesContainer>
 					</div>
