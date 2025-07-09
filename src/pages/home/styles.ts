@@ -135,17 +135,19 @@ export const CoffeeCardFooter = styled.footer`
   gap: 0.5rem;
 
   span {
-    ${({ theme }) => theme.text.body.regularS};
-    white-space: nowrap;
+    &:first-child {
+      ${({ theme }) => theme.text.body.regularS};
+      white-space: nowrap;
 
-    strong {
-      ${({ theme }) => theme.text.heading.titleM};
+      strong {
+        ${({ theme }) => theme.text.heading.titleM};
+      }
     }
-  }
 
-  form {
-    display: flex;
-    gap: 0.5rem;
+    &:last-child {
+      display: flex;
+      gap: 0.5rem;
+    }
   }
 `
 

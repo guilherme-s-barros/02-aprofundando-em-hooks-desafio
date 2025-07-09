@@ -5,17 +5,22 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
+		"serve": "json-server --watch ./db.json --port 3001",
 		"build": "tsc -b && vite build",
 		"preview": "vite preview",
 		"lint": "biome check ./src",
 		"lint:write": "biome check ./src --write"
 	},
 	"dependencies": {
+		"@hookform/resolvers": "5.1.1",
+		"axios": "1.10.0",
 		"phosphor-react": "1.4.1",
 		"react": "19.1.0",
 		"react-dom": "19.1.0",
+		"react-hook-form": "7.60.0",
 		"react-router-dom": "7.6.3",
-		"styled-components": "6.1.19"
+		"styled-components": "6.1.19",
+		"zod": "3.25.76"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.0.6",
@@ -23,6 +28,7 @@
 		"@types/react-dom": "19.1.6",
 		"@vitejs/plugin-react": "4.5.2",
 		"globals": "16.2.0",
+		"json-server": "1.0.0-beta.3",
 		"typescript": "5.8.3",
 		"vite": "7.0.0"
 	}

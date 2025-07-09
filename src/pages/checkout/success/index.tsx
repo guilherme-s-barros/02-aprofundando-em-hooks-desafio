@@ -41,7 +41,7 @@ export function Success() {
 						</span>
 
 						<span>
-							<IconContainer $backgroundColor="purple">
+							<IconContainer $backgroundColor="yellowDark">
 								<CurrencyDollar size={16} />
 							</IconContainer>
 
