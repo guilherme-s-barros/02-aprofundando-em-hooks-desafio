@@ -1,10 +1,23 @@
 import styled from 'styled-components'
 
 export const HeaderContainer = styled.header`
+  background: ${({ theme }) => theme.color.base.background};
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+`
+
+export const HeaderContent = styled.div`
+  max-width: calc(1120px + 2rem);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 0;
 
   > a {
     outline: none;
