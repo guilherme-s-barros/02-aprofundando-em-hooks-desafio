@@ -16,7 +16,7 @@ export const InfoContainer = styled.div`
   align-items: center;
   gap: 0.75rem;
 
-  span {
+  > span {
     ${({ theme }) => theme.text.body.regularS};
     background: ${({ theme }) => theme.color.brand.secondaryLight};
     color: ${({ theme }) => theme.color.brand.secondaryDark};
@@ -40,10 +40,29 @@ export const InfoContainer = styled.div`
     padding: 0.5rem;
     border-radius: 0.5rem;
     transition: all 0.2s;
+    position: relative;
 
     &:hover {
       background: ${({ theme }) => theme.color.brand.primary};
       color: ${({ theme }) => theme.color.brand.primaryLight};
     }
   }
+`
+
+export const Badge = styled.span`
+  ${({ theme }) => theme.text.body.boldS};
+  background: ${({ theme }) => theme.color.brand.primaryDark};
+  color: ${({ theme }) => theme.color.base.white};
+
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
 `

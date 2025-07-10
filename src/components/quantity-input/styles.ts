@@ -27,21 +27,28 @@ export const QuantityInputContainer = styled.div`
       right: 0.5rem;
     }
   }
+`
 
-  input[type=number] {
-    background: ${({ theme }) => theme.color.base.button};
-    color: ${({ theme }) => theme.color.base.title};
-    
-    width: 5.5rem;
-    height: 100%;
-    min-height: 2rem;
-    text-align: center;
+const InputBase = styled.input`
+  background: ${({ theme }) => theme.color.base.button};
+  color: ${({ theme }) => theme.color.base.title};
+  
+  width: 5.5rem;
+  height: 100%;
+  text-align: center;
 
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
 
-    border: none;
-    border-radius: 0.5rem;
-  }
+  border: none;
+  border-radius: 0.5rem;
+`
+
+export const InputSmall = styled(InputBase)`
+  min-height: 2rem;
+`
+
+export const InputBig = styled(InputBase)`
+  min-height: 2.5rem;
 `
