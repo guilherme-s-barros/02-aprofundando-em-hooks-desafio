@@ -6,7 +6,7 @@ export interface Coffee {
 	title: string
 	description: string
 	tags: string[]
-	price: string
+	price: number
 }
 
 interface CartItem {

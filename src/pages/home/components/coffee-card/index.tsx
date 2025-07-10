@@ -44,6 +44,21 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 	const quantity = watch('quantity')
 	const isSubmitDisabled = !quantity
 
+	const priceFormattedParts = new Intl.NumberFormat('pt-BR', {
+		style: 'currency',
+		currency: 'BRL',
+	}).formatToParts(coffee.price)
+
+	const currencySign = priceFormattedParts.find(
+		(part) => part.type === 'currency',
+	)?.value
+
+	const priceAmount = priceFormattedParts
+		.filter((part) => part.type !== 'currency')
+		.filter((part) => part.type !== 'literal')
+		.map((part) => part.value)
+		.join('')
+
 	function handleAddCoffeeToCart(data: AddCoffeeToCartFormData) {
 		addCoffeeToCart(coffee, data.quantity)
 		reset()
@@ -66,7 +81,7 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 
 			<CardFooter>
 				<span>
-					R$ <strong>{coffee.price}</strong>
+					{currencySign} <strong>{priceAmount}</strong>
 				</span>
 
 				<form onSubmit={handleSubmit(handleAddCoffeeToCart)}>
