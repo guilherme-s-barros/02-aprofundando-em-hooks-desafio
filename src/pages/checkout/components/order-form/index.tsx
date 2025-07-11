@@ -41,11 +41,22 @@ type MakeOrderFormSchema = z.infer<typeof makeOrderFormSchema>
 // }
 
 export function OrderForm() {
-	const { changeAddress, changePaymentMethod } = useCart()
+	const { changeAddress, changePaymentMethod, address, paymentMethod } =
+		useCart()
 	const navigate = useNavigate()
 
 	const { register, handleSubmit } = useForm({
 		resolver: zodResolver(makeOrderFormSchema),
+		defaultValues: {
+			cep: address?.cep ?? '',
+			street: address?.street ?? '',
+			number: address?.number ?? '',
+			complement: address?.complement ?? '',
+			district: address?.district ?? '',
+			city: address?.city ?? '',
+			uf: address?.uf ?? '',
+			paymentMethod: paymentMethod ?? 'credit',
+		},
 	})
 
 	function handleMakeOrder(data: MakeOrderFormSchema) {
