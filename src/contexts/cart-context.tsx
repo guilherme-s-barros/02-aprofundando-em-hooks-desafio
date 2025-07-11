@@ -14,13 +14,29 @@ export interface Item {
 	quantity: number
 }
 
+interface Address {
+	cep: string
+	street: string
+	complement?: string
+	number: string
+	district: string
+	city: string
+	uf: string
+}
+
+export type PaymentMethod = 'credit' | 'debit' | 'money'
+
 interface CartContextData {
 	cart: Item[]
+	address: Address | null
+	paymentMethod: PaymentMethod | null
 	addToCart(coffee: Coffee, quantity: number): void
 	incrementItemQuantity(itemId: string): void
 	decrementItemQuantity(itemId: string): void
 	changeItemQuantity(itemId: string, newQuantity: number): void
 	removeItem(itemId: string): void
+	changeAddress(newAddress: Address): void
+	changePaymentMethod(method: PaymentMethod): void
 }
 
 interface CartContextProviderProps {
@@ -31,6 +47,8 @@ const CartContext = createContext({} as CartContextData)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
 	const [cart, setCart] = useState<Item[]>([])
+	const [address, setAddress] = useState<Address | null>(null)
+	const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null)
 
 	function addToCart(coffee: Coffee, quantity: number) {
 		const itemIndex = cart.findIndex(
@@ -124,15 +142,27 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 		setCart((state) => state.filter((item) => item.coffee.id !== itemId))
 	}
 
+	function changeAddress(newAddress: Address) {
+		setAddress(newAddress)
+	}
+
+	function changePaymentMethod(method: PaymentMethod) {
+		setPaymentMethod(method)
+	}
+
 	return (
 		<CartContext.Provider
 			value={{
 				cart,
+				address,
+				paymentMethod,
 				addToCart,
 				incrementItemQuantity,
 				decrementItemQuantity,
 				changeItemQuantity,
 				removeItem,
+				changeAddress,
+				changePaymentMethod,
 			}}
 		>
 			{children}

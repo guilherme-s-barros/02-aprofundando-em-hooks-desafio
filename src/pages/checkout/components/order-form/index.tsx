@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import z from 'zod'
 
+import { useCart } from '../../../../contexts/cart-context'
 import {
 	FormContainer,
 	OptionalInput,
@@ -34,12 +35,13 @@ const makeOrderFormSchema = z.object({
 
 type MakeOrderFormSchema = z.infer<typeof makeOrderFormSchema>
 
-export interface State {
-	address: Omit<MakeOrderFormSchema, 'cep' | 'complement' | 'paymentMethod'>
-	paymentMethod: Pick<MakeOrderFormSchema, 'paymentMethod'>['paymentMethod']
-}
+// export interface State {
+// 	address: Omit<MakeOrderFormSchema, 'cep' | 'complement' | 'paymentMethod'>
+// 	paymentMethod: Pick<MakeOrderFormSchema, 'paymentMethod'>['paymentMethod']
+// }
 
 export function OrderForm() {
+	const { changeAddress, changePaymentMethod } = useCart()
 	const navigate = useNavigate()
 
 	const { register, handleSubmit } = useForm({
@@ -47,18 +49,18 @@ export function OrderForm() {
 	})
 
 	function handleMakeOrder(data: MakeOrderFormSchema) {
-		navigate('/checkout/success', {
-			state: {
-				paymentMethod: data.paymentMethod,
-				address: {
-					street: data.street,
-					number: data.number,
-					district: data.district,
-					city: data.city,
-					uf: data.uf,
-				},
-			} as State,
+		changeAddress({
+			cep: data.cep,
+			street: data.street,
+			complement: data.complement,
+			number: data.number,
+			district: data.district,
+			city: data.city,
+			uf: data.uf,
 		})
+
+		changePaymentMethod(data.paymentMethod)
+		navigate('/checkout/success')
 	}
 
 	return (

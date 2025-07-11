@@ -3,10 +3,10 @@ import {
 	MapPinIcon,
 	TimerIcon,
 } from '@phosphor-icons/react'
-import { useLocation } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { IconContainer } from '../../../components/icon-container'
-import type { State } from '../components/order-form'
+import { type PaymentMethod, useCart } from '../../../contexts/cart-context'
 import {
 	OrderInfoContainer,
 	OrderInfoContent,
@@ -15,14 +15,16 @@ import {
 } from './styles'
 
 export function Success() {
-	const location = useLocation()
+	const { address, paymentMethod } = useCart()
 
-	const { address, paymentMethod } = location.state as State
-
-	const paymentMethodMap: Record<typeof paymentMethod, string> = {
+	const paymentMethodMap: Record<PaymentMethod, string> = {
 		credit: 'Cartão de crédito',
 		debit: 'Cartão de débito',
 		money: 'Dinheiro',
+	}
+
+	if (!address || !paymentMethod) {
+		return <Navigate to="/" replace />
 	}
 
 	return (

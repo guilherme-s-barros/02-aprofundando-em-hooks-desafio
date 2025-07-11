@@ -5,7 +5,7 @@ import { useCart } from '../../contexts/cart-context'
 import { Badge, HeaderContainer, HeaderContent, InfoContainer } from './styles'
 
 export function Header() {
-	const { cart } = useCart()
+	const { cart, address } = useCart()
 
 	return (
 		<HeaderContainer>
@@ -15,10 +15,12 @@ export function Header() {
 				</Link>
 
 				<InfoContainer>
-					<span>
-						<MapPinIcon weight="fill" size={24} />
-						São Paulo, SP
-					</span>
+					{address && (
+						<span>
+							<MapPinIcon weight="fill" size={24} />
+							{address.city}, {address.uf}
+						</span>
+					)}
 
 					<Link to="/checkout" title="Ir ao carrinho">
 						<ShoppingCartIcon weight="fill" size={24} />
