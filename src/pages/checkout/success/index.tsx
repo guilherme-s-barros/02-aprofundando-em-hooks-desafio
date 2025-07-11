@@ -3,8 +3,10 @@ import {
 	MapPinIcon,
 	TimerIcon,
 } from '@phosphor-icons/react'
+import { useLocation } from 'react-router-dom'
 
 import { IconContainer } from '../../../components/icon-container'
+import type { State } from '../components/order-form'
 import {
 	OrderInfoContainer,
 	OrderInfoContent,
@@ -13,6 +15,16 @@ import {
 } from './styles'
 
 export function Success() {
+	const location = useLocation()
+
+	const { address, paymentMethod } = location.state as State
+
+	const paymentMethodMap: Record<typeof paymentMethod, string> = {
+		credit: 'Cartão de crédito',
+		debit: 'Cartão de débito',
+		money: 'Dinheiro',
+	}
+
 	return (
 		<SuccessContainer>
 			<TextContainer>
@@ -27,9 +39,12 @@ export function Success() {
 							</IconContainer>
 
 							<p>
-								Entrega em <strong>Rua João Daniel Martinelli, 102</strong>{' '}
+								Entrega em{' '}
+								<strong>
+									{address.street}, {address.number}
+								</strong>
 								<br />
-								Farrapos - Porto Alegre, RS
+								{address.district} - {address.city}, {address.uf}
 							</p>
 						</span>
 
@@ -51,7 +66,7 @@ export function Success() {
 
 							<p>
 								Pagamento na entrega <br />
-								<strong>Cartão de Crédito</strong>
+								<strong>{paymentMethodMap[paymentMethod]}</strong>
 							</p>
 						</span>
 					</OrderInfoContent>

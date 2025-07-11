@@ -7,6 +7,7 @@ import {
 	MoneyIcon,
 } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import z from 'zod'
 
 import {
@@ -31,13 +32,37 @@ const makeOrderFormSchema = z.object({
 	}),
 })
 
+type MakeOrderFormSchema = z.infer<typeof makeOrderFormSchema>
+
+export interface State {
+	address: Omit<MakeOrderFormSchema, 'cep' | 'complement' | 'paymentMethod'>
+	paymentMethod: Pick<MakeOrderFormSchema, 'paymentMethod'>['paymentMethod']
+}
+
 export function OrderForm() {
-	const _makeOrderForm = useForm({
+	const navigate = useNavigate()
+
+	const { register, handleSubmit } = useForm({
 		resolver: zodResolver(makeOrderFormSchema),
 	})
 
+	function handleMakeOrder(data: MakeOrderFormSchema) {
+		navigate('/checkout/success', {
+			state: {
+				paymentMethod: data.paymentMethod,
+				address: {
+					street: data.street,
+					number: data.number,
+					district: data.district,
+					city: data.city,
+					uf: data.uf,
+				},
+			} as State,
+		})
+	}
+
 	return (
-		<form id="orderForm">
+		<form id="orderForm" onSubmit={handleSubmit(handleMakeOrder)}>
 			<OrderFormSection>
 				<header>
 					<h3>
@@ -48,24 +73,60 @@ export function OrderForm() {
 				</header>
 
 				<FormContainer>
-					<TextInput type="text" placeholder="CEP" maxLength={8} required />
-					<TextInput type="text" placeholder="Rua" required />
+					<TextInput
+						type="text"
+						placeholder="CEP"
+						maxLength={8}
+						required
+						{...register('cep')}
+					/>
+
+					<TextInput
+						type="text"
+						placeholder="Rua"
+						required
+						{...register('street')}
+					/>
+
 					<TextInput
 						type="text"
 						placeholder="Número"
 						inputMode="numeric"
 						maxLength={5}
 						required
+						{...register('number')}
 					/>
 
 					<OptionalInput>
-						<TextInput type="text" placeholder="Complemento" />
+						<TextInput
+							type="text"
+							placeholder="Complemento"
+							{...register('complement')}
+						/>
 						<em>Opcional</em>
 					</OptionalInput>
 
-					<TextInput type="text" placeholder="Bairro" required />
-					<TextInput type="text" placeholder="Cidade" required />
-					<TextInput type="text" placeholder="UF" maxLength={2} required />
+					<TextInput
+						type="text"
+						placeholder="Bairro"
+						required
+						{...register('district')}
+					/>
+
+					<TextInput
+						type="text"
+						placeholder="Cidade"
+						required
+						{...register('city')}
+					/>
+
+					<TextInput
+						type="text"
+						placeholder="UF"
+						maxLength={2}
+						required
+						{...register('uf')}
+					/>
 				</FormContainer>
 			</OrderFormSection>
 			<OrderFormSection>
@@ -81,7 +142,13 @@ export function OrderForm() {
 
 				<PaymentMethods>
 					<PaymentMethodButton>
-						<input type="radio" name="paymentMethod" value="credit" />
+						<input
+							type="radio"
+							value="credit"
+							required
+							{...register('paymentMethod')}
+						/>
+
 						<span>
 							<CreditCardIcon size={16} />
 							Cartão de Crédito
@@ -89,7 +156,13 @@ export function OrderForm() {
 					</PaymentMethodButton>
 
 					<PaymentMethodButton>
-						<input type="radio" name="paymentMethod" value="debit" />
+						<input
+							type="radio"
+							value="debit"
+							required
+							{...register('paymentMethod')}
+						/>
+
 						<span>
 							<BankIcon size={16} />
 							Cartão de Débito
@@ -97,7 +170,13 @@ export function OrderForm() {
 					</PaymentMethodButton>
 
 					<PaymentMethodButton>
-						<input type="radio" name="paymentMethod" value="money" />
+						<input
+							type="radio"
+							value="money"
+							required
+							{...register('paymentMethod')}
+						/>
+
 						<span>
 							<MoneyIcon size={16} />
 							Dinheiro

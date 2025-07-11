@@ -115,6 +115,7 @@ export const PaymentMethodButton = styled.label`
     gap: 0.75rem;
     border-radius: 0.5rem;
     padding: 1rem;
+    height: 100%;
 
     text-transform: uppercase;
     transition: 0.2s all;
