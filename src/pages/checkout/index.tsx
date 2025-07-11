@@ -1,20 +1,19 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Bank,
 	CreditCard,
 	CurrencyDollar,
 	MapPinLine,
 	Money,
-	Trash,
 } from 'phosphor-react'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
 
-import { QuantityInput } from '../../components/quantity-input'
+import { useCart } from '../../contexts/cart-context'
+import { CartItem } from './components/cart-item'
 import {
 	AmountContainer,
 	CartContainer,
-	CartItem,
-	CartItemActions,
-	CartItemDetails,
-	CartItemInfo,
 	CheckoutContainer,
 	ConfirmOrderButton,
 	FormContainer,
@@ -22,11 +21,29 @@ import {
 	OrderFormSection,
 	PaymentMethodButton,
 	PaymentMethods,
-	RemoveCartItemButton,
 	TextInput,
 } from './styles'
 
+const makeOrderFormSchema = z.object({
+	cep: z.string().length(8, 'CEP inválido'),
+	street: z.string().nonempty('Informe a rua'),
+	number: z.string().nonempty('Informe o número de sua residência'),
+	complement: z.string().optional(),
+	district: z.string().nonempty('Informe o bairro'),
+	city: z.string().nonempty('Informe a cidade'),
+	uf: z.string().length(2, 'UF inválida'),
+	paymentMethod: z.enum(['credit', 'debit', 'money'], {
+		message: 'Informe um método de pagamento',
+	}),
+})
+
 export function Checkout() {
+	const { cart } = useCart()
+
+	const _makeOrderForm = useForm({
+		resolver: zodResolver(makeOrderFormSchema),
+	})
+
 	return (
 		<CheckoutContainer>
 			<section>
@@ -43,7 +60,7 @@ export function Checkout() {
 						</header>
 
 						<FormContainer>
-							<TextInput type="text" placeholder="CEP" maxLength={9} required />
+							<TextInput type="text" placeholder="CEP" maxLength={8} required />
 							<TextInput type="text" placeholder="Rua" required />
 							<TextInput
 								type="text"
@@ -76,7 +93,7 @@ export function Checkout() {
 
 						<PaymentMethods>
 							<PaymentMethodButton>
-								<input type="radio" name="paymentMethod" id="creditCard" />
+								<input type="radio" name="paymentMethod" value="credit" />
 								<span>
 									<CreditCard size={16} />
 									Cartão de Crédito
@@ -84,7 +101,7 @@ export function Checkout() {
 							</PaymentMethodButton>
 
 							<PaymentMethodButton>
-								<input type="radio" name="paymentMethod" id="creditCard" />
+								<input type="radio" name="paymentMethod" value="debit" />
 								<span>
 									<Bank size={16} />
 									Cartão de Débito
@@ -92,7 +109,7 @@ export function Checkout() {
 							</PaymentMethodButton>
 
 							<PaymentMethodButton>
-								<input type="radio" name="paymentMethod" id="creditCard" />
+								<input type="radio" name="paymentMethod" value="money" />
 								<span>
 									<Money size={16} />
 									Dinheiro
@@ -106,51 +123,11 @@ export function Checkout() {
 				<h2>Cafés selecionados</h2>
 
 				<CartContainer>
-					<div>
-						<CartItem>
-							<CartItemInfo>
-								<img
-									src="/images/coffees/expresso.png"
-									alt="Expresso tradicional"
-								/>
-
-								<CartItemDetails>
-									<p>Expresso tradicional</p>
-
-									<CartItemActions>
-										<QuantityInput />
-
-										<RemoveCartItemButton type="button">
-											<Trash size={16} />
-											Remover
-										</RemoveCartItemButton>
-									</CartItemActions>
-								</CartItemDetails>
-							</CartItemInfo>
-
-							<strong>R$ 9,90</strong>
-						</CartItem>
-						<CartItem>
-							<CartItemInfo>
-								<img src="/images/coffees/latte.png" alt="Latte" />
-
-								<CartItemDetails>
-									<p>Latte</p>
-
-									<CartItemActions>
-										<QuantityInput />
-
-										<RemoveCartItemButton type="button">
-											<Trash size={16} />
-											Remover
-										</RemoveCartItemButton>
-									</CartItemActions>
-								</CartItemDetails>
-							</CartItemInfo>
-
-							<strong>R$ 19,90</strong>
-						</CartItem>
-					</div>
+					<ul>
+						{cart.map((cartItem) => {
+							return <CartItem key={cartItem.coffee.id} item={cartItem} />
+						})}
+					</ul>
 
 					<AmountContainer>
 						<p>

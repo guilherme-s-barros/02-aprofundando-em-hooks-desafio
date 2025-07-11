@@ -1,66 +1,33 @@
 import { Minus, Plus } from 'phosphor-react'
-import type { ChangeEvent } from 'react'
-import { useFormContext } from 'react-hook-form'
+import type { InputHTMLAttributes } from 'react'
 
 import { InputBig, InputSmall, QuantityInputContainer } from './styles'
 
-interface QuantityInputProps {
-	size: 'big' | 'small'
+interface QuantityInputProps extends InputHTMLAttributes<HTMLInputElement> {
+	variant?: 'big' | 'small'
+	onIncrement(): void
+	onDecrement(): void
 }
 
-export function QuantityInput({ size }: QuantityInputProps) {
-	const { register, setValue, getValues } = useFormContext()
-
-	function handleIncrementQuantity() {
-		const quantity = getValues('quantity')
-		setValue('quantity', Math.min(quantity + 1, 99))
-	}
-
-	function handleDecrementQuantity() {
-		const quantity = getValues('quantity')
-		setValue('quantity', Math.max(quantity - 1, 0))
-	}
-
-	function handleChangeQuantity(event: ChangeEvent<HTMLInputElement>) {
-		const quantity = Number(event.target.value)
-
-		if (Number.isNaN(quantity)) {
-			setValue('quantity', 0)
-			return
-		}
-
-		setValue('quantity', Math.max(0, Math.min(quantity, 99)))
-	}
-
+export function QuantityInput({
+	variant = 'big',
+	onIncrement,
+	onDecrement,
+	...rest
+}: QuantityInputProps) {
 	return (
 		<QuantityInputContainer>
-			<button type="button" title="Remover" onClick={handleDecrementQuantity}>
+			<button type="button" title="Remover" onClick={onDecrement}>
 				<Minus size={12} />
 			</button>
 
-			{size === 'big' ? (
-				<InputBig
-					type="number"
-					min={0}
-					max={99}
-					{...register('quantity', {
-						valueAsNumber: true,
-						onChange: handleChangeQuantity,
-					})}
-				/>
+			{variant === 'big' ? (
+				<InputBig type="number" min={0} max={99} required {...rest} />
 			) : (
-				<InputSmall
-					type="number"
-					min={0}
-					max={99}
-					{...register('quantity', {
-						valueAsNumber: true,
-						onChange: handleChangeQuantity,
-					})}
-				/>
+				<InputSmall type="number" min={0} max={99} required {...rest} />
 			)}
 
-			<button type="button" title="Adicionar" onClick={handleIncrementQuantity}>
+			<button type="button" title="Adicionar" onClick={onIncrement}>
 				<Plus size={12} />
 			</button>
 		</QuantityInputContainer>

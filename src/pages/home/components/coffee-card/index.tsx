@@ -1,8 +1,6 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { ShoppingCart } from 'phosphor-react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { type ChangeEvent, useState } from 'react'
 import type { KnownTarget } from 'styled-components/dist/types'
-import z from 'zod'
 
 import { QuantityInput } from '../../../../components/quantity-input'
 import { type Coffee, useCart } from '../../../../contexts/cart-context'
@@ -11,6 +9,7 @@ import {
 	Card,
 	CardBody,
 	CardFooter,
+	Control,
 	Tag,
 	TagList,
 } from './styles'
@@ -20,28 +19,11 @@ interface CoffeeCardProps {
 	as?: KnownTarget
 }
 
-const addCoffeeToCartFormData = z.object({
-	quantity: z
-		.number()
-		.min(1, 'A quantidade mínima é de 1 para adicionar ao carrinho.')
-		.max(99, 'A quantidade máxima é de 99 para adicionar ao carrinho.'),
-})
-
-type AddCoffeeToCartFormData = z.infer<typeof addCoffeeToCartFormData>
-
 export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
-	const { addCoffeeToCart } = useCart()
+	const [quantity, setQuantity] = useState(0)
 
-	const addCoffeeToCartForm = useForm({
-		resolver: zodResolver(addCoffeeToCartFormData),
-		defaultValues: {
-			quantity: 0,
-		},
-	})
+	const { addToCart } = useCart()
 
-	const { handleSubmit, watch, reset } = addCoffeeToCartForm
-
-	const quantity = watch('quantity')
 	const isSubmitDisabled = !quantity
 
 	const priceFormattedParts = new Intl.NumberFormat('pt-BR', {
@@ -59,9 +41,27 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 		.map((part) => part.value)
 		.join('')
 
-	function handleAddCoffeeToCart(data: AddCoffeeToCartFormData) {
-		addCoffeeToCart(coffee, data.quantity)
-		reset()
+	function handleIncrementQuantity() {
+		setQuantity((state) => Math.min(state + 1, 99))
+	}
+
+	function handleDecrementQuantity() {
+		setQuantity((state) => Math.max(state - 1, 0))
+	}
+
+	function handleChangeQuantity(event: ChangeEvent<HTMLInputElement>) {
+		const quantity = Number(event.target.value)
+
+		if (Number.isNaN(quantity)) {
+			setQuantity(0)
+			return
+		}
+
+		setQuantity(Math.max(0, Math.min(quantity, 99)))
+	}
+
+	function handleAddCoffeeToCart() {
+		addToCart(coffee, quantity)
 	}
 
 	return (
@@ -84,16 +84,24 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 					{currencySign} <strong>{priceAmount}</strong>
 				</span>
 
-				<form onSubmit={handleSubmit(handleAddCoffeeToCart)}>
-					<FormProvider {...addCoffeeToCartForm}>
-						<QuantityInput size="big" />
-					</FormProvider>
+				<Control>
+					<QuantityInput
+						value={String(quantity).padStart(2, '0')}
+						onIncrement={handleIncrementQuantity}
+						onDecrement={handleDecrementQuantity}
+						onChange={handleChangeQuantity}
+					/>
+
 					{!isSubmitDisabled && (
-						<AddToCartButton type="submit" title="Adicionar ao carrinho">
+						<AddToCartButton
+							type="button"
+							title="Adicionar ao carrinho"
+							onClick={handleAddCoffeeToCart}
+						>
 							<ShoppingCart weight="fill" size={24} />
 						</AddToCartButton>
 					)}
-				</form>
+				</Control>
 			</CardFooter>
 		</Card>
 	)

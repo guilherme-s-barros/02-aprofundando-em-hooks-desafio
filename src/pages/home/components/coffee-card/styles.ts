@@ -71,11 +71,11 @@ export const CardFooter = styled.footer`
       ${({ theme }) => theme.text.heading.titleM};
     }
   }
+`
 
-  form {
-    display: flex;
-    gap: 0.5rem;
-  }
+export const Control = styled.div`
+  display: flex;
+  gap: 0.5rem;
 `
 
 export const AddToCartButton = styled.button`

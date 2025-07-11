@@ -9,14 +9,17 @@ export interface Coffee {
 	price: number
 }
 
-interface CartItem {
+export interface Item {
 	coffee: Coffee
 	quantity: number
 }
 
 interface CartContextData {
-	cart: CartItem[]
-	addCoffeeToCart(coffee: Coffee, quantity: number): void
+	cart: Item[]
+	addToCart(coffee: Coffee, quantity: number): void
+	incrementItemQuantity(itemId: string): void
+	decrementItemQuantity(itemId: string): void
+	changeItemQuantity(itemId: string, newQuantity: number): void
 }
 
 interface CartContextProviderProps {
@@ -26,9 +29,9 @@ interface CartContextProviderProps {
 const CartContext = createContext({} as CartContextData)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-	const [cart, setCart] = useState<CartItem[]>([])
+	const [cart, setCart] = useState<Item[]>([])
 
-	function addCoffeeToCart(coffee: Coffee, quantity: number) {
+	function addToCart(coffee: Coffee, quantity: number) {
 		const cartItemIndex = cart.findIndex(
 			(cartItem) => cartItem.coffee.id === coffee.id,
 		)
@@ -55,13 +58,66 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 		const newCartItem = {
 			coffee,
 			quantity,
-		} satisfies CartItem
+		} satisfies Item
 
 		setCart((state) => [...state, newCartItem])
 	}
 
+	function incrementItemQuantity(itemId: string) {
+		setCart((state) =>
+			state.map((cartItem) => {
+				if (cartItem.coffee.id === itemId) {
+					return {
+						...cartItem,
+						quantity: Math.min(cartItem.quantity + 1, 99),
+					}
+				}
+
+				return cartItem
+			}),
+		)
+	}
+
+	function decrementItemQuantity(itemId: string) {
+		setCart((state) =>
+			state.map((cartItem) => {
+				if (cartItem.coffee.id === itemId) {
+					return {
+						...cartItem,
+						quantity: Math.max(cartItem.quantity - 1, 0),
+					}
+				}
+
+				return cartItem
+			}),
+		)
+	}
+
+	function changeItemQuantity(itemId: string, newQuantity: number) {
+		setCart((state) =>
+			state.map((cartItem) => {
+				if (cartItem.coffee.id === itemId) {
+					return {
+						...cartItem,
+						quantity: Math.max(0, Math.min(newQuantity, 99)),
+					}
+				}
+
+				return cartItem
+			}),
+		)
+	}
+
 	return (
-		<CartContext.Provider value={{ cart, addCoffeeToCart }}>
+		<CartContext.Provider
+			value={{
+				cart,
+				addToCart,
+				incrementItemQuantity,
+				decrementItemQuantity,
+				changeItemQuantity,
+			}}
+		>
 			{children}
 		</CartContext.Provider>
 	)
