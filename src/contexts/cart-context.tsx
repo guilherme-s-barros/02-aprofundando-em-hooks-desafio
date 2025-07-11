@@ -20,6 +20,7 @@ interface CartContextData {
 	incrementItemQuantity(itemId: string): void
 	decrementItemQuantity(itemId: string): void
 	changeItemQuantity(itemId: string, newQuantity: number): void
+	removeItem(itemId: string): void
 }
 
 interface CartContextProviderProps {
@@ -32,80 +33,95 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 	const [cart, setCart] = useState<Item[]>([])
 
 	function addToCart(coffee: Coffee, quantity: number) {
-		const cartItemIndex = cart.findIndex(
+		const itemIndex = cart.findIndex(
 			(cartItem) => cartItem.coffee.id === coffee.id,
 		)
 
-		const cartItemAlreadyExists = cartItemIndex >= 0
+		const itemAlreadyExists = itemIndex >= 0
 
-		if (cartItemAlreadyExists) {
+		if (itemAlreadyExists) {
 			setCart((state) =>
-				state.map((cartItem) => {
-					if (cartItem.coffee.id === coffee.id) {
+				state.map((item) => {
+					if (item.coffee.id === coffee.id) {
 						return {
-							...cartItem,
-							quantity: cartItem.quantity + quantity,
+							...item,
+							quantity,
 						}
 					}
 
-					return cartItem
+					return item
 				}),
 			)
 
 			return
 		}
 
-		const newCartItem = {
+		const item = {
 			coffee,
 			quantity,
 		} satisfies Item
 
-		setCart((state) => [...state, newCartItem])
+		setCart((state) => [...state, item])
 	}
 
 	function incrementItemQuantity(itemId: string) {
 		setCart((state) =>
-			state.map((cartItem) => {
-				if (cartItem.coffee.id === itemId) {
+			state.map((item) => {
+				if (item.coffee.id === itemId) {
 					return {
-						...cartItem,
-						quantity: Math.min(cartItem.quantity + 1, 99),
+						...item,
+						quantity: Math.min(item.quantity + 1, 99),
 					}
 				}
 
-				return cartItem
+				return item
 			}),
 		)
 	}
 
 	function decrementItemQuantity(itemId: string) {
+		const item = cart.find((item) => item.coffee.id === itemId)
+
+		if (!item) {
+			return
+		}
+
+		if (item.quantity - 1 <= 0) {
+			removeItem(itemId)
+			return
+		}
+
 		setCart((state) =>
-			state.map((cartItem) => {
-				if (cartItem.coffee.id === itemId) {
+			state.map((item) => {
+				if (item.coffee.id === itemId) {
 					return {
-						...cartItem,
-						quantity: Math.max(cartItem.quantity - 1, 0),
+						...item,
+						quantity: Math.max(item.quantity - 1, 0),
 					}
 				}
 
-				return cartItem
+				return item
 			}),
 		)
 	}
 
 	function changeItemQuantity(itemId: string, newQuantity: number) {
 		setCart((state) =>
-			state.map((cartItem) => {
-				if (cartItem.coffee.id === itemId) {
+			state.map((item) => {
+				if (item.coffee.id === itemId) {
 					return {
-						...cartItem,
+						...item,
 						quantity: Math.max(0, Math.min(newQuantity, 99)),
 					}
 				}
 
-				return cartItem
+				return item
 			}),
 		)
+	}
+
+	function removeItem(itemId: string) {
+		setCart((state) => state.filter((item) => item.coffee.id !== itemId))
 	}
 
 	return (
@@ -116,6 +132,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 				incrementItemQuantity,
 				decrementItemQuantity,
 				changeItemQuantity,
+				removeItem,
 			}}
 		>
 			{children}

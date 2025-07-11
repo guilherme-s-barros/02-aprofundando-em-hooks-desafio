@@ -1,4 +1,4 @@
-import { Trash } from 'phosphor-react'
+import { TrashIcon } from '@phosphor-icons/react'
 import type { ChangeEvent } from 'react'
 
 import { QuantityInput } from '../../../../components/quantity-input'
@@ -16,10 +16,12 @@ interface CartItemProps {
 }
 
 export function CartItem({ item }: CartItemProps) {
-	console.log(item)
-
-	const { incrementItemQuantity, decrementItemQuantity, changeItemQuantity } =
-		useCart()
+	const {
+		incrementItemQuantity,
+		decrementItemQuantity,
+		changeItemQuantity,
+		removeItem,
+	} = useCart()
 
 	const priceFormatted = new Intl.NumberFormat('pt-BR', {
 		style: 'currency',
@@ -45,6 +47,10 @@ export function CartItem({ item }: CartItemProps) {
 		changeItemQuantity(item.coffee.id, Math.max(0, Math.min(quantity, 99)))
 	}
 
+	function handleRemoveItem() {
+		removeItem(item.coffee.id)
+	}
+
 	return (
 		<CartItemContainer key={item.coffee.id}>
 			<Info>
@@ -62,8 +68,8 @@ export function CartItem({ item }: CartItemProps) {
 							value={String(item.quantity).padStart(2, '0')}
 						/>
 
-						<RemoveCartItemButton type="button">
-							<Trash size={16} />
+						<RemoveCartItemButton type="button" onClick={handleRemoveItem}>
+							<TrashIcon size={16} />
 							Remover
 						</RemoveCartItemButton>
 					</Actions>

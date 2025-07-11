@@ -1,16 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-	Bank,
-	CreditCard,
-	CurrencyDollar,
-	MapPinLine,
-	Money,
-} from 'phosphor-react'
+	BankIcon,
+	CreditCardIcon,
+	CurrencyDollarIcon,
+	MapPinLineIcon,
+	MoneyIcon,
+} from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
 
 import { useCart } from '../../contexts/cart-context'
 import { CartItem } from './components/cart-item'
+import { EmptyCart } from './components/empty-cart'
 import {
 	AmountContainer,
 	CartContainer,
@@ -44,6 +45,27 @@ export function Checkout() {
 		resolver: zodResolver(makeOrderFormSchema),
 	})
 
+	const currencyFormat = new Intl.NumberFormat('pt-BR', {
+		style: 'currency',
+		currency: 'BRL',
+	})
+
+	const subtotal = cart.reduce((acc, item) => {
+		return acc + item.coffee.price * item.quantity
+	}, 0)
+
+	const total = subtotal + 3.5
+
+	const deliveryRate = 3.5
+
+	const formattedSubtotal = currencyFormat.format(subtotal)
+	const formattedDeliveryRate = currencyFormat.format(deliveryRate)
+	const formattedTotal = currencyFormat.format(total)
+
+	if (cart.length === 0) {
+		return <EmptyCart />
+	}
+
 	return (
 		<CheckoutContainer>
 			<section>
@@ -53,7 +75,7 @@ export function Checkout() {
 					<OrderFormSection>
 						<header>
 							<h3>
-								<MapPinLine size={24} /> Endereço de Entrega
+								<MapPinLineIcon size={24} /> Endereço de Entrega
 							</h3>
 
 							<p>Informe o endereço onde deseja receber seu pedido</p>
@@ -83,7 +105,7 @@ export function Checkout() {
 					<OrderFormSection>
 						<header>
 							<h3>
-								<CurrencyDollar size={24} /> Pagamento
+								<CurrencyDollarIcon size={24} /> Pagamento
 							</h3>
 
 							<p>
@@ -95,7 +117,7 @@ export function Checkout() {
 							<PaymentMethodButton>
 								<input type="radio" name="paymentMethod" value="credit" />
 								<span>
-									<CreditCard size={16} />
+									<CreditCardIcon size={16} />
 									Cartão de Crédito
 								</span>
 							</PaymentMethodButton>
@@ -103,7 +125,7 @@ export function Checkout() {
 							<PaymentMethodButton>
 								<input type="radio" name="paymentMethod" value="debit" />
 								<span>
-									<Bank size={16} />
+									<BankIcon size={16} />
 									Cartão de Débito
 								</span>
 							</PaymentMethodButton>
@@ -111,7 +133,7 @@ export function Checkout() {
 							<PaymentMethodButton>
 								<input type="radio" name="paymentMethod" value="money" />
 								<span>
-									<Money size={16} />
+									<MoneyIcon size={16} />
 									Dinheiro
 								</span>
 							</PaymentMethodButton>
@@ -131,18 +153,18 @@ export function Checkout() {
 
 					<AmountContainer>
 						<p>
-							<span>Total de itens</span>
-							R$ 29,70
+							<span>Subtotal</span>
+							{formattedSubtotal}
 						</p>
 
 						<p>
 							<span>Entrega</span>
-							R$ 3,50
+							{formattedDeliveryRate}
 						</p>
 
 						<strong>
 							<span>Total</span>
-							R$ 33,20
+							{formattedTotal}
 						</strong>
 					</AmountContainer>
 

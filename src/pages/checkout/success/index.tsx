@@ -1,4 +1,8 @@
-import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
+import {
+	CurrencyDollarIcon,
+	MapPinIcon,
+	TimerIcon,
+} from '@phosphor-icons/react'
 
 import { IconContainer } from '../../../components/icon-container'
 import {
@@ -19,7 +23,7 @@ export function Success() {
 					<OrderInfoContent>
 						<span>
 							<IconContainer $backgroundColor="purple">
-								<MapPin weight="fill" size={16} />
+								<MapPinIcon weight="fill" size={16} />
 							</IconContainer>
 
 							<p>
@@ -31,7 +35,7 @@ export function Success() {
 
 						<span>
 							<IconContainer $backgroundColor="yellow">
-								<Timer weight="fill" size={16} />
+								<TimerIcon weight="fill" size={16} />
 							</IconContainer>
 
 							<p>
@@ -42,7 +46,7 @@ export function Success() {
 
 						<span>
 							<IconContainer $backgroundColor="yellowDark">
-								<CurrencyDollar size={16} />
+								<CurrencyDollarIcon size={16} />
 							</IconContainer>
 
 							<p>

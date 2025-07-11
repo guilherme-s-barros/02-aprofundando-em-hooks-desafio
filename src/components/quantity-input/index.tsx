@@ -1,4 +1,4 @@
-import { Minus, Plus } from 'phosphor-react'
+import { MinusIcon, PlusIcon } from '@phosphor-icons/react'
 import type { InputHTMLAttributes } from 'react'
 
 import { InputBig, InputSmall, QuantityInputContainer } from './styles'
@@ -18,7 +18,7 @@ export function QuantityInput({
 	return (
 		<QuantityInputContainer>
 			<button type="button" title="Remover" onClick={onDecrement}>
-				<Minus size={12} />
+				<MinusIcon size={12} />
 			</button>
 
 			{variant === 'big' ? (
@@ -28,7 +28,7 @@ export function QuantityInput({
 			)}
 
 			<button type="button" title="Adicionar" onClick={onIncrement}>
-				<Plus size={12} />
+				<PlusIcon size={12} />
 			</button>
 		</QuantityInputContainer>
 	)

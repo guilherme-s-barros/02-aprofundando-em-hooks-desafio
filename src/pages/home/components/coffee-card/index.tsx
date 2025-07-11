@@ -1,4 +1,4 @@
-import { ShoppingCart } from 'phosphor-react'
+import { ShoppingCartIcon } from '@phosphor-icons/react'
 import { type ChangeEvent, useState } from 'react'
 import type { KnownTarget } from 'styled-components/dist/types'
 
@@ -20,7 +20,17 @@ interface CoffeeCardProps {
 }
 
 export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
-	const [quantity, setQuantity] = useState(0)
+	const { cart } = useCart()
+
+	const [quantity, setQuantity] = useState(() => {
+		const item = cart.find((item) => item.coffee.id === coffee.id)
+
+		if (!item) {
+			return 0
+		}
+
+		return item.quantity
+	})
 
 	const { addToCart } = useCart()
 
@@ -98,7 +108,7 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 							title="Adicionar ao carrinho"
 							onClick={handleAddCoffeeToCart}
 						>
-							<ShoppingCart weight="fill" size={24} />
+							<ShoppingCartIcon weight="fill" size={24} />
 						</AddToCartButton>
 					)}
 				</Control>

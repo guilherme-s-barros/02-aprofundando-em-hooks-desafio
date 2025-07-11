@@ -1,9 +1,9 @@
 import {
-	Coffee as CoffeeIcon,
-	Package,
-	ShoppingCart,
-	Timer,
-} from 'phosphor-react'
+	CoffeeIcon,
+	PackageIcon,
+	ShoppingCartIcon,
+	TimerIcon,
+} from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 
 import { IconContainer } from '../../components/icon-container'
@@ -42,19 +42,19 @@ export function Home() {
 						<FeaturesContainer>
 							<span>
 								<IconContainer $backgroundColor="yellowDark">
-									<ShoppingCart weight="fill" size={16} />
+									<ShoppingCartIcon weight="fill" size={16} />
 								</IconContainer>
 								<p>Compra simples e segura</p>
 							</span>
 							<span>
 								<IconContainer $backgroundColor="gray">
-									<Package weight="fill" size={16} />
+									<PackageIcon weight="fill" size={16} />
 								</IconContainer>
 								<p>Embalagem mantém o café intacto</p>
 							</span>
 							<span>
 								<IconContainer $backgroundColor="yellow">
-									<Timer weight="fill" size={16} />
+									<TimerIcon weight="fill" size={16} />
 								</IconContainer>
 								<p>Entrega rápida e rastreada</p>
 							</span>
