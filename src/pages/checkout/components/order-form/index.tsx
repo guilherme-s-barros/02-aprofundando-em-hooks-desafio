@@ -1,24 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-	BankIcon,
-	CreditCardIcon,
-	CurrencyDollarIcon,
-	MapPinLineIcon,
-	MoneyIcon,
-} from '@phosphor-icons/react'
-import { useForm } from 'react-hook-form'
+import { CurrencyDollarIcon, MapPinLineIcon } from '@phosphor-icons/react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import z from 'zod'
 
 import { useCart } from '../../../../contexts/cart-context'
-import {
-	FormContainer,
-	OptionalInput,
-	OrderFormSection,
-	PaymentMethodButton,
-	PaymentMethods,
-	TextInput,
-} from './styles'
+import { PaymentMethodButton } from '../payment-method-button'
+import { TextInput } from '../text-input'
+import { FormContainer, OrderFormSection, PaymentMethods } from './styles'
 
 const makeOrderFormSchema = z.object({
 	cep: z.string().length(8, 'CEP inválido'),
@@ -35,17 +24,13 @@ const makeOrderFormSchema = z.object({
 
 type MakeOrderFormSchema = z.infer<typeof makeOrderFormSchema>
 
-// export interface State {
-// 	address: Omit<MakeOrderFormSchema, 'cep' | 'complement' | 'paymentMethod'>
-// 	paymentMethod: Pick<MakeOrderFormSchema, 'paymentMethod'>['paymentMethod']
-// }
-
 export function OrderForm() {
 	const { changeAddress, changePaymentMethod, address, paymentMethod } =
 		useCart()
+
 	const navigate = useNavigate()
 
-	const { register, handleSubmit } = useForm({
+	const orderForm = useForm({
 		resolver: zodResolver(makeOrderFormSchema),
 		defaultValues: {
 			cep: address?.cep ?? '',
@@ -58,6 +43,8 @@ export function OrderForm() {
 			paymentMethod: paymentMethod ?? 'credit',
 		},
 	})
+
+	const { handleSubmit } = orderForm
 
 	function handleMakeOrder(data: MakeOrderFormSchema) {
 		changeAddress({
@@ -76,127 +63,57 @@ export function OrderForm() {
 
 	return (
 		<form id="orderForm" onSubmit={handleSubmit(handleMakeOrder)}>
-			<OrderFormSection>
-				<header>
-					<h3>
-						<MapPinLineIcon size={24} /> Endereço de Entrega
-					</h3>
+			<FormProvider {...orderForm}>
+				<OrderFormSection>
+					<header>
+						<h3>
+							<MapPinLineIcon size={24} /> Endereço de Entrega
+						</h3>
 
-					<p>Informe o endereço onde deseja receber seu pedido</p>
-				</header>
+						<p>Informe o endereço onde deseja receber seu pedido</p>
+					</header>
 
-				<FormContainer>
-					<TextInput
-						type="text"
-						placeholder="CEP"
-						maxLength={8}
-						required
-						{...register('cep')}
-					/>
+					<FormContainer>
+						<TextInput placeholder="CEP" maxLength={8} formRegister="cep" />
+						<TextInput placeholder="Rua" formRegister="street" />
 
-					<TextInput
-						type="text"
-						placeholder="Rua"
-						required
-						{...register('street')}
-					/>
-
-					<TextInput
-						type="text"
-						placeholder="Número"
-						inputMode="numeric"
-						maxLength={5}
-						required
-						{...register('number')}
-					/>
-
-					<OptionalInput>
 						<TextInput
-							type="text"
+							placeholder="Número"
+							inputMode="numeric"
+							maxLength={5}
+							formRegister="number"
+						/>
+
+						<TextInput
 							placeholder="Complemento"
-							{...register('complement')}
-						/>
-						<em>Opcional</em>
-					</OptionalInput>
-
-					<TextInput
-						type="text"
-						placeholder="Bairro"
-						required
-						{...register('district')}
-					/>
-
-					<TextInput
-						type="text"
-						placeholder="Cidade"
-						required
-						{...register('city')}
-					/>
-
-					<TextInput
-						type="text"
-						placeholder="UF"
-						maxLength={2}
-						required
-						{...register('uf')}
-					/>
-				</FormContainer>
-			</OrderFormSection>
-			<OrderFormSection>
-				<header>
-					<h3>
-						<CurrencyDollarIcon size={24} /> Pagamento
-					</h3>
-
-					<p>
-						O pagamento é feito na entrega. Escolha a forma que deseja pagar
-					</p>
-				</header>
-
-				<PaymentMethods>
-					<PaymentMethodButton>
-						<input
-							type="radio"
-							value="credit"
-							required
-							{...register('paymentMethod')}
+							optional
+							formRegister="complement"
 						/>
 
-						<span>
-							<CreditCardIcon size={16} />
-							Cartão de Crédito
-						</span>
-					</PaymentMethodButton>
+						<TextInput placeholder="Bairro" formRegister="district" />
+						<TextInput placeholder="Cidade" formRegister="city" />
+						<TextInput placeholder="UF" maxLength={2} formRegister="uf" />
+					</FormContainer>
+				</OrderFormSection>
 
-					<PaymentMethodButton>
-						<input
-							type="radio"
-							value="debit"
-							required
-							{...register('paymentMethod')}
-						/>
+				<OrderFormSection>
+					<header>
+						<h3>
+							<CurrencyDollarIcon size={24} /> Pagamento
+						</h3>
 
-						<span>
-							<BankIcon size={16} />
-							Cartão de Débito
-						</span>
-					</PaymentMethodButton>
+						<p>
+							O pagamento é feito na entrega. Escolha a forma que deseja pagar
+						</p>
+					</header>
 
-					<PaymentMethodButton>
-						<input
-							type="radio"
-							value="money"
-							required
-							{...register('paymentMethod')}
-						/>
-
-						<span>
-							<MoneyIcon size={16} />
-							Dinheiro
-						</span>
-					</PaymentMethodButton>
-				</PaymentMethods>
-			</OrderFormSection>
+					<PaymentMethods>
+						<PaymentMethodButton value="credit" />
+						<PaymentMethodButton value="debit" />
+						<PaymentMethodButton value="money" />
+					</PaymentMethods>
+				</OrderFormSection>
+			</FormProvider>
 		</form>
 	)
 }

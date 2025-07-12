@@ -43,6 +43,12 @@ interface CartContextProviderProps {
 	children: ReactNode
 }
 
+export const paymentMethodMap: Record<PaymentMethod, string> = {
+	credit: 'Cartão de crédito',
+	debit: 'Cartão de débito',
+	money: 'Dinheiro',
+}
+
 const CartContext = createContext({} as CartContextData)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {

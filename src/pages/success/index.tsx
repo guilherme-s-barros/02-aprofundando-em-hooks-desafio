@@ -5,8 +5,8 @@ import {
 } from '@phosphor-icons/react'
 import { Navigate } from 'react-router-dom'
 
-import { IconContainer } from '../../../components/icon-container'
-import { type PaymentMethod, useCart } from '../../../contexts/cart-context'
+import { IconContainer } from '../../components/icon-container'
+import { paymentMethodMap, useCart } from '../../contexts/cart-context'
 import {
 	OrderInfoContainer,
 	OrderInfoContent,
@@ -16,12 +16,6 @@ import {
 
 export function Success() {
 	const { address, paymentMethod } = useCart()
-
-	const paymentMethodMap: Record<PaymentMethod, string> = {
-		credit: 'Cartão de crédito',
-		debit: 'Cartão de débito',
-		money: 'Dinheiro',
-	}
 
 	if (!address || !paymentMethod) {
 		return <Navigate to="/" replace />

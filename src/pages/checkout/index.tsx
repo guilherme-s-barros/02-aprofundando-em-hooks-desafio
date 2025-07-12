@@ -39,6 +39,7 @@ export function Checkout() {
 
 				<OrderForm />
 			</section>
+
 			<section>
 				<h2>Cafés selecionados</h2>
 

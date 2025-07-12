@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { DefaultLayout } from './layout/default'
 import { Checkout } from './pages/checkout'
-import { Success } from './pages/checkout/success'
 import { Home } from './pages/home'
+import { Success } from './pages/success'
 
 export function Router() {
 	return (
