@@ -3,7 +3,8 @@ import { type ChangeEvent, useState } from 'react'
 import type { KnownTarget } from 'styled-components/dist/types'
 
 import { QuantityInput } from '../../../../components/quantity-input'
-import { type Coffee, useCart } from '../../../../contexts/cart-context'
+import { useCart } from '../../../../contexts/cart-context'
+import type { Coffee } from '../../../../reducers/cart/reducer'
 import {
 	AddToCartButton,
 	Card,
@@ -71,7 +72,10 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 	}
 
 	function handleAddCoffeeToCart() {
-		addToCart(coffee, quantity)
+		addToCart({
+			coffee,
+			quantity,
+		})
 	}
 
 	return (

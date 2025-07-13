@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from 'react'
 
 import { IconContainer } from '../../components/icon-container'
-import type { Coffee } from '../../contexts/cart-context'
+import type { Coffee } from '../../reducers/cart/reducer'
 import { getCoffees } from '../../services/get-coffees'
 import { CoffeeList } from './components/coffee-list'
 import {

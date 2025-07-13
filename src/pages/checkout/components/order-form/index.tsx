@@ -25,9 +25,7 @@ const makeOrderFormSchema = z.object({
 type MakeOrderFormSchema = z.infer<typeof makeOrderFormSchema>
 
 export function OrderForm() {
-	const { changeAddress, changePaymentMethod, address, paymentMethod } =
-		useCart()
-
+	const { address, paymentMethod, makeOrder } = useCart()
 	const navigate = useNavigate()
 
 	const orderForm = useForm({
@@ -47,7 +45,7 @@ export function OrderForm() {
 	const { handleSubmit } = orderForm
 
 	function handleMakeOrder(data: MakeOrderFormSchema) {
-		changeAddress({
+		const address = {
 			cep: data.cep,
 			street: data.street,
 			complement: data.complement,
@@ -55,9 +53,15 @@ export function OrderForm() {
 			district: data.district,
 			city: data.city,
 			uf: data.uf,
+		}
+
+		const paymentMethod = data.paymentMethod
+
+		makeOrder({
+			address,
+			paymentMethod,
 		})
 
-		changePaymentMethod(data.paymentMethod)
 		navigate('/checkout/success')
 	}
 

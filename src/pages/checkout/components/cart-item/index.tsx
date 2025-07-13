@@ -2,7 +2,8 @@ import { TrashIcon } from '@phosphor-icons/react'
 import type { ChangeEvent } from 'react'
 
 import { QuantityInput } from '../../../../components/quantity-input'
-import { type Item, useCart } from '../../../../contexts/cart-context'
+import { useCart } from '../../../../contexts/cart-context'
+import type { Item } from '../../../../reducers/cart/reducer'
 import {
 	Actions,
 	CartItemContainer,

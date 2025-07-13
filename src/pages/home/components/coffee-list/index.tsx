@@ -1,4 +1,4 @@
-import type { Coffee } from '../../../../contexts/cart-context'
+import type { Coffee } from '../../../../reducers/cart/reducer'
 import { CoffeeCard } from '../coffee-card'
 import { List } from './styles'
 

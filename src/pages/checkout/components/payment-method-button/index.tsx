@@ -1,10 +1,8 @@
 import { CreditCardIcon } from '@phosphor-icons/react'
 import { useFormContext } from 'react-hook-form'
 
-import {
-	type PaymentMethod,
-	paymentMethodMap,
-} from '../../../../contexts/cart-context'
+import { paymentMethodMap } from '../../../../contexts/cart-context'
+import type { PaymentMethod } from '../../../../reducers/cart/reducer'
 import { Button } from './styles'
 
 interface PaymentMethodButtonProps {
