@@ -3,7 +3,7 @@ import { type ChangeEvent, useEffect, useState } from 'react'
 import type { KnownTarget } from 'styled-components/dist/types'
 
 import { QuantityInput } from '../../../../components/quantity-input'
-import { useCart } from '../../../../contexts/cart-context'
+import { useCart } from '../../../../hooks/use-cart'
 import type { Coffee } from '../../../../reducers/cart/reducer'
 import {
 	AddToCartButton,

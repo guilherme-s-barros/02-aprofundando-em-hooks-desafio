@@ -1,10 +1,4 @@
-import {
-	createContext,
-	type ReactNode,
-	useContext,
-	useEffect,
-	useReducer,
-} from 'react'
+import { createContext, type ReactNode, useEffect, useReducer } from 'react'
 
 import {
 	addToCartAction,
@@ -45,7 +39,7 @@ export const paymentMethodMap: Record<PaymentMethod, string> = {
 	money: 'Dinheiro',
 }
 
-const CartContext = createContext({} as CartContextData)
+export const CartContext = createContext({} as CartContextData)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
 	const [cartState, dispatch] = useReducer(
@@ -117,5 +111,3 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 		</CartContext.Provider>
 	)
 }
-
-export const useCart = () => useContext(CartContext)

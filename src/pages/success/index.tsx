@@ -6,7 +6,8 @@ import {
 import { Navigate } from 'react-router-dom'
 
 import { IconContainer } from '../../components/icon-container'
-import { paymentMethodMap, useCart } from '../../contexts/cart-context'
+import { paymentMethodMap } from '../../contexts/cart-context'
+import { useCart } from '../../hooks/use-cart'
 import {
 	OrderInfoContainer,
 	OrderInfoContent,

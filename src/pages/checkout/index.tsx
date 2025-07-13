@@ -1,4 +1,4 @@
-import { useCart } from '../../contexts/cart-context'
+import { useCart } from '../../hooks/use-cart'
 import { CartItem } from './components/cart-item'
 import { EmptyCart } from './components/empty-cart'
 import { OrderForm } from './components/order-form'

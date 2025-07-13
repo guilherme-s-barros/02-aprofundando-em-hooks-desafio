@@ -1,7 +1,7 @@
 import { MapPinIcon, ShoppingCartIcon } from '@phosphor-icons/react'
 import { Link } from 'react-router-dom'
 
-import { useCart } from '../../contexts/cart-context'
+import { useCart } from '../../hooks/use-cart'
 import { Badge, HeaderContainer, HeaderContent, InfoContainer } from './styles'
 
 export function Header() {

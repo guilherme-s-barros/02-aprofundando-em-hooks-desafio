@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import z from 'zod'
 
-import { useCart } from '../../../../contexts/cart-context'
+import { useCart } from '../../../../hooks/use-cart'
 import { PaymentMethodButton } from '../payment-method-button'
 import { TextInput } from '../text-input'
 import { FormContainer, OrderFormSection, PaymentMethods } from './styles'
