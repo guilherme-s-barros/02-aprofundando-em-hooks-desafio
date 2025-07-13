@@ -57,12 +57,10 @@ export function OrderForm() {
 
 		const paymentMethod = data.paymentMethod
 
-		setTimeout(() => {
-			makeOrder({
-				address,
-				paymentMethod,
-			})
-		}, 500)
+		makeOrder({
+			address,
+			paymentMethod,
+		})
 
 		navigate('/checkout/success')
 	}
