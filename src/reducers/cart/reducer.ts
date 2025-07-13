@@ -1,3 +1,5 @@
+import { produce } from 'immer'
+
 export interface Coffee {
 	id: string
 	image: string
@@ -59,112 +61,83 @@ export const initialCartState: CartState = {
 export function cartReducer(state: CartState, action: Action): CartState {
 	switch (action.type) {
 		case 'ADD_TO_CART': {
-			const itemIndex = state.cart.findIndex(
-				(item) => item.coffee.id === action.payload.item.coffee.id,
-			)
+			return produce(state, (draft) => {
+				const item = draft.cart.find(
+					(item) => item.coffee.id === action.payload.item.coffee.id,
+				)
 
-			const itemAlreadyExists = itemIndex >= 0
-
-			if (itemAlreadyExists) {
-				return {
-					...state,
-					cart: state.cart.map((item) => {
-						if (item.coffee.id === action.payload.item.coffee.id) {
-							return {
-								...item,
-								quantity: action.payload.item.quantity,
-							}
-						}
-
-						return item
-					}),
+				if (item) {
+					item.quantity = action.payload.item.quantity
+					return
 				}
-			}
 
-			return {
-				...state,
-				cart: [...state.cart, action.payload.item],
-			}
+				draft.cart.push(action.payload.item)
+			})
 		}
 
 		case 'INCREMENT_ITEM_QUANTITY': {
-			return {
-				...state,
-				cart: state.cart.map((item) => {
-					if (item.coffee.id === action.payload.itemId) {
-						return {
-							...item,
-							quantity: Math.min(item.quantity + 1, 99),
-						}
-					}
+			return produce(state, (draft) => {
+				const item = draft.cart.find(
+					(item) => item.coffee.id === action.payload.itemId,
+				)
 
-					return item
-				}),
-			}
+				if (item) {
+					item.quantity = Math.min(item.quantity + 1, 99)
+				}
+			})
 		}
 
 		case 'DECREMENT_ITEM_QUANTITY': {
-			const itemIndex = state.cart.findIndex(
-				(item) => item.coffee.id === action.payload.itemId,
-			)
+			return produce(state, (draft) => {
+				const itemIndex = draft.cart.findIndex(
+					(item) => item.coffee.id === action.payload.itemId,
+				)
 
-			const item = state.cart[itemIndex]
-
-			if (item.quantity - 1 <= 0) {
-				return {
-					...state,
-					cart: state.cart.filter(
-						(item) => item.coffee.id !== action.payload.itemId,
-					),
+				if (itemIndex < 0) {
+					return
 				}
-			}
 
-			return {
-				...state,
-				cart: state.cart.map((item) => {
-					if (item.coffee.id === action.payload.itemId) {
-						return {
-							...item,
-							quantity: Math.max(item.quantity - 1, 0),
-						}
-					}
+				const item = draft.cart[itemIndex]
 
-					return item
-				}),
-			}
+				if (item.quantity - 1 <= 0) {
+					draft.cart.splice(itemIndex, 1)
+					return
+				}
+
+				item.quantity = Math.max(item.quantity - 1, 0)
+			})
 		}
 
 		case 'CHANGE_ITEM_QUANTITY': {
-			return {
-				...state,
-				cart: state.cart.map((item) => {
-					if (item.coffee.id === action.payload.itemId) {
-						return {
-							...item,
-							quantity: Math.max(0, Math.min(action.payload.newQuantity, 99)),
-						}
-					}
+			return produce(state, (draft) => {
+				const item = draft.cart.find(
+					(item) => item.coffee.id === action.payload.itemId,
+				)
 
-					return item
-				}),
-			}
+				if (item) {
+					item.quantity = Math.max(0, Math.min(action.payload.newQuantity, 99))
+				}
+			})
 		}
 
 		case 'REMOVE_ITEM': {
-			return {
-				...state,
-				cart: state.cart.filter(
-					(item) => item.coffee.id !== action.payload.itemId,
-				),
-			}
+			return produce(state, (draft) => {
+				const itemIndex = draft.cart.findIndex(
+					(item) => item.coffee.id === action.payload.itemId,
+				)
+
+				draft.cart.splice(itemIndex, 1)
+			})
 		}
 
 		case 'MAKE_ORDER': {
-			return {
-				...state,
-				...action.payload.order,
-				cart: [],
-			}
+			const { address, paymentMethod } = action.payload.order
+
+			return produce(state, (draft) => {
+				draft.address = address
+				draft.paymentMethod = paymentMethod
+				draft.cart = []
+			})
 		}
 	}
 }
