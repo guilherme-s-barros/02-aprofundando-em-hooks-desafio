@@ -1,5 +1,5 @@
-import { ShoppingCartIcon } from '@phosphor-icons/react'
-import { type ChangeEvent, useState } from 'react'
+import { CheckFatIcon, ShoppingCartIcon } from '@phosphor-icons/react'
+import { type ChangeEvent, useEffect, useState } from 'react'
 import type { KnownTarget } from 'styled-components/dist/types'
 
 import { QuantityInput } from '../../../../components/quantity-input'
@@ -11,6 +11,7 @@ import {
 	CardBody,
 	CardFooter,
 	Control,
+	SuccessButton,
 	Tag,
 	TagList,
 } from './styles'
@@ -23,6 +24,7 @@ interface CoffeeCardProps {
 export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 	const { cart, addToCart } = useCart()
 
+	const [isItemAdded, setIsItemAdded] = useState(false)
 	const [quantity, setQuantity] = useState(() => {
 		const item = cart.find((item) => item.coffee.id === coffee.id)
 
@@ -50,6 +52,16 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 		.map((part) => part.value)
 		.join('')
 
+	useEffect(() => {
+		const timeout = setTimeout(() => setIsItemAdded(false), 1000)
+
+		return () => {
+			if (timeout) {
+				clearTimeout(timeout)
+			}
+		}
+	}, [isItemAdded])
+
 	function handleIncrementQuantity() {
 		setQuantity((state) => Math.min(state + 1, 99))
 	}
@@ -74,6 +86,8 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 			coffee,
 			quantity,
 		})
+
+		setIsItemAdded(true)
 	}
 
 	return (
@@ -104,15 +118,24 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 						onChange={handleChangeQuantity}
 					/>
 
-					{!isSubmitDisabled && (
-						<AddToCartButton
-							type="button"
-							title="Adicionar ao carrinho"
-							onClick={handleAddCoffeeToCart}
-						>
-							<ShoppingCartIcon weight="fill" size={24} />
-						</AddToCartButton>
-					)}
+					{!isSubmitDisabled &&
+						(isItemAdded ? (
+							<SuccessButton
+								type="button"
+								title="Adicionado ao carrinho com sucesso"
+								disabled
+							>
+								<CheckFatIcon weight="fill" size={24} />
+							</SuccessButton>
+						) : (
+							<AddToCartButton
+								type="button"
+								title="Adicionar ao carrinho"
+								onClick={handleAddCoffeeToCart}
+							>
+								<ShoppingCartIcon weight="fill" size={24} />
+							</AddToCartButton>
+						))}
 				</Control>
 			</CardFooter>
 		</Card>

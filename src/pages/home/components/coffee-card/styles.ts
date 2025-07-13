@@ -78,16 +78,23 @@ export const Control = styled.div`
   gap: 0.5rem;
 `
 
-export const AddToCartButton = styled.button`
-  background: ${({ theme }) => theme.color.brand.secondaryDark};
+const ButtonBase = styled.button`
   color: ${({ theme }) => theme.color.base.card};
 
   line-height: 0;
   padding: 0.5rem;
   border-radius: 0.5rem;
   transition: 0.2s background;
+`
+
+export const AddToCartButton = styled(ButtonBase)`
+  background: ${({ theme }) => theme.color.brand.secondaryDark};
 
   &:not(:disabled):hover {
     background: ${({ theme }) => theme.color.brand.secondary}
   }
+`
+
+export const SuccessButton = styled(ButtonBase)`
+  background: ${({ theme }) => theme.color.feedback.success};
 `

@@ -22,6 +22,9 @@ export const defaultTheme = {
           );
       `,
 		},
+		feedback: {
+			success: _primitives.color.green[50],
+		},
 		base: {
 			title: _primitives.color.gray[90],
 			subtitle: _primitives.color.gray[80],

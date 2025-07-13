@@ -10,6 +10,9 @@ export const _primitives = {
 			50: '#8047F8',
 			60: '#4B2995',
 		},
+		green: {
+			50: '#11823b',
+		},
 		gray: {
 			5: '#FFFFFF',
 			10: '#FAFAFA',
