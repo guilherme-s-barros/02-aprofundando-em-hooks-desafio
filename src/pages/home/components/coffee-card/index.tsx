@@ -21,7 +21,7 @@ interface CoffeeCardProps {
 }
 
 export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
-	const { cart } = useCart()
+	const { cart, addToCart } = useCart()
 
 	const [quantity, setQuantity] = useState(() => {
 		const item = cart.find((item) => item.coffee.id === coffee.id)
@@ -32,8 +32,6 @@ export function CoffeeCard({ coffee, as }: CoffeeCardProps) {
 
 		return item.quantity
 	})
-
-	const { addToCart } = useCart()
 
 	const isSubmitDisabled = !quantity
 

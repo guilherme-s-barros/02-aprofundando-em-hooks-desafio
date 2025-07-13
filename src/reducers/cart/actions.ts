@@ -1,6 +1,6 @@
 import type { Action, Item, Order } from './reducer'
 
-export function addToCartAction(item: Item): Action {
+export function addToCartAction(item: Omit<Item, 'id'>): Action {
 	return {
 		type: 'ADD_TO_CART',
 		payload: {

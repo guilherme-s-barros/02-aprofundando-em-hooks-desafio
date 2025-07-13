@@ -21,7 +21,7 @@ interface CartContextData {
 	cart: Item[]
 	address: Address | null
 	paymentMethod: PaymentMethod
-	addToCart(item: Item): void
+	addToCart(item: Omit<Item, 'id'>): void
 	incrementItemQuantity(itemId: string): void
 	decrementItemQuantity(itemId: string): void
 	changeItemQuantity(itemId: string, newQuantity: number): void
@@ -46,7 +46,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
 	const { cart, address, paymentMethod } = cartState
 
-	function addToCart(item: Item) {
+	function addToCart(item: Omit<Item, 'id'>) {
 		dispatch(addToCartAction(item))
 	}
 

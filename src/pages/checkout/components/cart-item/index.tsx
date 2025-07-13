@@ -30,30 +30,30 @@ export function CartItem({ item }: CartItemProps) {
 	}).format(item.coffee.price)
 
 	function handleDecrementItemQuantity() {
-		decrementItemQuantity(item.coffee.id)
+		decrementItemQuantity(item.id)
 	}
 
 	function handleIncrementItemQuantity() {
-		incrementItemQuantity(item.coffee.id)
+		incrementItemQuantity(item.id)
 	}
 
 	function handleChangeItemQuantity(event: ChangeEvent<HTMLInputElement>) {
 		const quantity = Number(event.target.value)
 
 		if (Number.isNaN(quantity)) {
-			changeItemQuantity(item.coffee.id, 0)
+			changeItemQuantity(item.id, 0)
 			return
 		}
 
-		changeItemQuantity(item.coffee.id, Math.max(0, Math.min(quantity, 99)))
+		changeItemQuantity(item.id, Math.max(0, Math.min(quantity, 99)))
 	}
 
 	function handleRemoveItem() {
-		removeItem(item.coffee.id)
+		removeItem(item.id)
 	}
 
 	return (
-		<CartItemContainer key={item.coffee.id}>
+		<CartItemContainer key={item.id}>
 			<Info>
 				<img src={item.coffee.image} alt={item.coffee.title} />
 

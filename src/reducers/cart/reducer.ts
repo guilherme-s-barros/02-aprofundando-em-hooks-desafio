@@ -1,4 +1,5 @@
 import { produce } from 'immer'
+import { v4 as generateUUID } from 'uuid'
 
 export interface Coffee {
 	id: string
@@ -10,6 +11,7 @@ export interface Coffee {
 }
 
 export interface Item {
+	id: string
 	coffee: Coffee
 	quantity: number
 }
@@ -38,7 +40,7 @@ interface CartState {
 }
 
 type ActionMap = {
-	ADD_TO_CART: { item: Item }
+	ADD_TO_CART: { item: Omit<Item, 'id'> }
 	INCREMENT_ITEM_QUANTITY: { itemId: string }
 	DECREMENT_ITEM_QUANTITY: { itemId: string }
 	CHANGE_ITEM_QUANTITY: { itemId: string; newQuantity: number }
@@ -71,14 +73,17 @@ export function cartReducer(state: CartState, action: Action): CartState {
 					return
 				}
 
-				draft.cart.push(action.payload.item)
+				draft.cart.push({
+					...action.payload.item,
+					id: generateUUID(),
+				})
 			})
 		}
 
 		case 'INCREMENT_ITEM_QUANTITY': {
 			return produce(state, (draft) => {
 				const item = draft.cart.find(
-					(item) => item.coffee.id === action.payload.itemId,
+					(item) => item.id === action.payload.itemId,
 				)
 
 				if (item) {
@@ -90,7 +95,7 @@ export function cartReducer(state: CartState, action: Action): CartState {
 		case 'DECREMENT_ITEM_QUANTITY': {
 			return produce(state, (draft) => {
 				const itemIndex = draft.cart.findIndex(
-					(item) => item.coffee.id === action.payload.itemId,
+					(item) => item.id === action.payload.itemId,
 				)
 
 				if (itemIndex < 0) {
@@ -111,7 +116,7 @@ export function cartReducer(state: CartState, action: Action): CartState {
 		case 'CHANGE_ITEM_QUANTITY': {
 			return produce(state, (draft) => {
 				const item = draft.cart.find(
-					(item) => item.coffee.id === action.payload.itemId,
+					(item) => item.id === action.payload.itemId,
 				)
 
 				if (item) {
@@ -123,7 +128,7 @@ export function cartReducer(state: CartState, action: Action): CartState {
 		case 'REMOVE_ITEM': {
 			return produce(state, (draft) => {
 				const itemIndex = draft.cart.findIndex(
-					(item) => item.coffee.id === action.payload.itemId,
+					(item) => item.id === action.payload.itemId,
 				)
 
 				draft.cart.splice(itemIndex, 1)
