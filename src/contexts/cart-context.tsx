@@ -1,4 +1,10 @@
-import { createContext, type ReactNode, useContext, useReducer } from 'react'
+import {
+	createContext,
+	type ReactNode,
+	useContext,
+	useEffect,
+	useReducer,
+} from 'react'
 
 import {
 	addToCartAction,
@@ -42,7 +48,30 @@ export const paymentMethodMap: Record<PaymentMethod, string> = {
 const CartContext = createContext({} as CartContextData)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-	const [cartState, dispatch] = useReducer(cartReducer, initialCartState)
+	const [cartState, dispatch] = useReducer(
+		cartReducer,
+		initialCartState,
+		(initialState) => {
+			const serializedCartState = localStorage.getItem(
+				'@coffee-delivery:cart-state-1.0.0',
+			)
+
+			if (serializedCartState) {
+				return JSON.parse(serializedCartState)
+			}
+
+			return initialState
+		},
+	)
+
+	useEffect(() => {
+		const serializedCartState = JSON.stringify(cartState)
+
+		localStorage.setItem(
+			'@coffee-delivery:cart-state-1.0.0',
+			serializedCartState,
+		)
+	}, [cartState])
 
 	const { cart, address, paymentMethod } = cartState
 
