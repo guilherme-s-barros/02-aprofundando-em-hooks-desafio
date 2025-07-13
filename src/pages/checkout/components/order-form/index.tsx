@@ -1,10 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CurrencyDollarIcon, MapPinLineIcon } from '@phosphor-icons/react'
+import type { FocusEvent } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import z from 'zod'
 
 import { useCart } from '../../../../hooks/use-cart'
+import { getAddressByCEP } from '../../../../services/get-address-by-cep'
 import { PaymentMethodButton } from '../payment-method-button'
 import { TextInput } from '../text-input'
 import { FormContainer, OrderFormSection, PaymentMethods } from './styles'
@@ -42,7 +44,7 @@ export function OrderForm() {
 		},
 	})
 
-	const { handleSubmit } = orderForm
+	const { handleSubmit, setValue } = orderForm
 
 	function handleMakeOrder(data: MakeOrderFormSchema) {
 		const address = {
@@ -65,6 +67,21 @@ export function OrderForm() {
 		navigate('/checkout/success')
 	}
 
+	async function handleAutoCompleteAddress(
+		event: FocusEvent<HTMLInputElement>,
+	) {
+		try {
+			const address = await getAddressByCEP(event.target.value)
+
+			setValue('street', address.logradouro)
+			setValue('district', address.bairro)
+			setValue('city', address.localidade)
+			setValue('uf', address.uf)
+		} catch (_error) {
+			console.log('CEP Inválido')
+		}
+	}
+
 	return (
 		<form id="orderForm" onSubmit={handleSubmit(handleMakeOrder)}>
 			<FormProvider {...orderForm}>
@@ -78,7 +95,13 @@ export function OrderForm() {
 					</header>
 
 					<FormContainer>
-						<TextInput placeholder="CEP" maxLength={8} formRegister="cep" />
+						<TextInput
+							placeholder="CEP"
+							maxLength={8}
+							formRegister="cep"
+							onBlur={handleAutoCompleteAddress}
+						/>
+
 						<TextInput placeholder="Rua" formRegister="street" />
 
 						<TextInput

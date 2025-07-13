@@ -18,11 +18,11 @@ export function TextInput({
 	if (optional) {
 		return (
 			<OptionalInput>
-				<Input type="text" {...props} {...register(formRegister)} />
+				<Input type="text" {...register(formRegister)} {...props} />
 				<em>Opcional</em>
 			</OptionalInput>
 		)
 	}
 
-	return <Input type="text" required {...props} {...register(formRegister)} />
+	return <Input type="text" required {...register(formRegister)} {...props} />
 }

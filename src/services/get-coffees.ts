@@ -1,8 +1,8 @@
-import type { Coffee } from '../contexts/cart-context'
 import { api } from '../lib/api'
+import type { Coffee } from '../reducers/cart/reducer'
 
 export async function getCoffees() {
-	const coffees = await api.get<Coffee[]>('/coffees')
+	const response = await api.get<Coffee[]>('/coffees')
 
-	return coffees.data
+	return response.data
 }
