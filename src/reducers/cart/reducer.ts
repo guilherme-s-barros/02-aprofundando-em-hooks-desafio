@@ -46,7 +46,7 @@ type ActionMap = {
 	MAKE_ORDER: { order: Order }
 }
 
-type Action = {
+export type Action = {
 	[Type in keyof ActionMap]: ActionMap[Type] extends null
 		? { type: Type }
 		: { type: Type; payload: ActionMap[Type] }

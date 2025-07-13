@@ -1,6 +1,14 @@
 import { createContext, type ReactNode, useContext, useReducer } from 'react'
 
 import {
+	addToCartAction,
+	changeItemQuantityAction,
+	decrementItemQuantityAction,
+	incrementItemQuantityAction,
+	makeOrderAction,
+	removeItemAction,
+} from '../reducers/cart/actions'
+import {
 	type Address,
 	cartReducer,
 	type Item,
@@ -39,58 +47,27 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 	const { cart, address, paymentMethod } = cartState
 
 	function addToCart(item: Item) {
-		dispatch({
-			type: 'ADD_TO_CART',
-			payload: {
-				item,
-			},
-		})
+		dispatch(addToCartAction(item))
 	}
 
 	function incrementItemQuantity(itemId: string) {
-		dispatch({
-			type: 'INCREMENT_ITEM_QUANTITY',
-			payload: {
-				itemId,
-			},
-		})
+		dispatch(incrementItemQuantityAction(itemId))
 	}
 
 	function decrementItemQuantity(itemId: string) {
-		dispatch({
-			type: 'DECREMENT_ITEM_QUANTITY',
-			payload: {
-				itemId,
-			},
-		})
+		dispatch(decrementItemQuantityAction(itemId))
 	}
 
 	function changeItemQuantity(itemId: string, newQuantity: number) {
-		dispatch({
-			type: 'CHANGE_ITEM_QUANTITY',
-			payload: {
-				itemId,
-				newQuantity,
-			},
-		})
+		dispatch(changeItemQuantityAction(itemId, newQuantity))
 	}
 
 	function removeItem(itemId: string) {
-		dispatch({
-			type: 'REMOVE_ITEM',
-			payload: {
-				itemId,
-			},
-		})
+		dispatch(removeItemAction(itemId))
 	}
 
 	function makeOrder(order: Order) {
-		dispatch({
-			type: 'MAKE_ORDER',
-			payload: {
-				order,
-			},
-		})
+		dispatch(makeOrderAction(order))
 	}
 
 	return (
