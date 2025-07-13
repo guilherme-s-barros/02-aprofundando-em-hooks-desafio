@@ -17,7 +17,13 @@
 		"rules": {
 			"recommended": true,
 			"correctness": {
-				"useExhaustiveDependencies": "off"
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"reportMissingDependenciesArray": true,
+						"reportUnnecessaryDependencies": false
+					}
+				}
 			}
 		}
 	},
