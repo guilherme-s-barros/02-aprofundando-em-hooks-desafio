@@ -163,6 +163,7 @@ export function cartReducer(state: CartState, action: Action): CartState {
 			return {
 				...state,
 				...action.payload.order,
+				cart: [],
 			}
 		}
 	}
